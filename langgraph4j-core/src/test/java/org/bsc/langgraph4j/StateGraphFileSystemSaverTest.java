@@ -70,6 +70,37 @@ public class StateGraphFileSystemSaverTest implements LG4JLoggable {
     final String rootPath = Paths.get( "target", "checkpoint" ).toString();
 
     @ParameterizedTest
+    @EnumSource(StateSerializerEnum.class)
+    public void testCheckpointNamespaceIsolation(StateSerializerEnum stateSerializer) throws Exception {
+        final var checkpointStore = Paths.get(rootPath, "testCheckpointNamespaceIsolation", stateSerializer.name());
+        var saver = new FileSystemSaver(checkpointStore, stateSerializer.value);
+        var tenantA = RunnableConfig.builder()
+                .threadId("shared-thread")
+                .checkpointNamespace("tenant-a")
+                .build();
+        var tenantB = RunnableConfig.builder()
+                .threadId("shared-thread")
+                .checkpointNamespace("tenant-b")
+                .build();
+
+        saver.deleteFile(tenantA);
+        saver.deleteFile(tenantB);
+        saver.put(tenantA, Checkpoint.builder()
+                .state(Map.of("tenant", "a"))
+                .nodeId(START)
+                .nextNodeId(END)
+                .build());
+        saver.put(tenantB, Checkpoint.builder()
+                .state(Map.of("tenant", "b"))
+                .nodeId(START)
+                .nextNodeId(END)
+                .build());
+
+        assertEquals("a", saver.get(tenantA).orElseThrow().getState().get("tenant"));
+        assertEquals("b", saver.get(tenantB).orElseThrow().getState().get("tenant"));
+    }
+
+    @ParameterizedTest
     @EnumSource( StateSerializerEnum.class )
     public void testCheckpointSaverResubmit( StateSerializerEnum stateSerializer ) throws Exception {
         int expectedSteps = 5;
