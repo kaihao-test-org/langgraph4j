@@ -1,6 +1,6 @@
 """Alpha module for delta-diff testing."""
 
-UPSTREAM_TOUCHED = False
+UPSTREAM_TOUCHED = True  # changed by main
 
 
 def load_config(path):
@@ -8,7 +8,7 @@ def load_config(path):
         return handle.read()
 
 
-def compute(values):  # v1
+def compute(values):  # v3
     total = 0
     for value in values:
         total += value
