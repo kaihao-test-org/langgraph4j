@@ -1,6 +1,6 @@
 """Shared module: upstream edits the top, the author edits the bottom."""
 
-UPSTREAM_SETTING = 'v0-from-main'
+UPSTREAM_SETTING = 'v1-CHANGED-BY-MAIN'
 
 
 def upstream_helper():
