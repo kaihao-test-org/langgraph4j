@@ -1,1 +1,1 @@
-SHARED = 2  # rewritten history
+SHARED = 3  # after history rewrite
