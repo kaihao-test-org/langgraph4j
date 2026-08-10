@@ -152,3 +152,5 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
 ```
 
 rev c
+
+rev d
