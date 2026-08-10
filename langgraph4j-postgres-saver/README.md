@@ -150,3 +150,7 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+## Local development
+
+Run `docker compose up` from `src/main/docker` to start a PostgreSQL instance seeded with `init_schema.sql`.
