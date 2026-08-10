@@ -150,3 +150,7 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+rev c
+
+rev d
