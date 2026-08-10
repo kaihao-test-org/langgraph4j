@@ -21,3 +21,5 @@ CREATE UNIQUE INDEX idx_unique_lg4jcheckpointnamespace_slug ON LG4JCheckpointNam
 -- Namespaces are addressed by name within a thread.
 
 -- rev c
+
+-- rev d
