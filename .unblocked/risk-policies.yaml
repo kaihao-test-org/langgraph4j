@@ -1,0 +1,16 @@
+context: |
+  langgraph4j persists graph checkpoints in PostgreSQL. Schema files live under
+  langgraph4j-postgres-saver/src/main/docker/.
+
+policies:
+  - policy: Destructive schema change
+    risk: highest
+    criteria: |
+      The change removes or renames a database column, table, or index that already exists on the
+      default branch.
+
+  - policy: Additive schema change
+    risk: low
+    criteria: |
+      The change only adds new tables, columns, or indexes, and removes or renames nothing that
+      already exists on the default branch.
