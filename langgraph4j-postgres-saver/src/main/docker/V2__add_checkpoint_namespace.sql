@@ -17,3 +17,5 @@ CREATE TABLE LG4JCheckpointNamespace (
 CREATE INDEX idx_lg4jcheckpointnamespace_thread_id ON LG4JCheckpointNamespace(thread_id);
 
 CREATE UNIQUE INDEX idx_unique_lg4jcheckpointnamespace_slug ON LG4JCheckpointNamespace(thread_id, name);
+
+-- Namespaces are addressed by name within a thread.
