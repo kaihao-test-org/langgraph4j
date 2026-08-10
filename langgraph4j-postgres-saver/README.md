@@ -154,3 +154,5 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
 ## Local development
 
 Run `docker compose up` from `src/main/docker` to start a PostgreSQL instance seeded with `init_schema.sql`.
+
+See the module javadoc for supported checkpoint backends.
