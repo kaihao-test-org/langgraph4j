@@ -15,3 +15,5 @@ CREATE TABLE LG4JThreadTag (
 CREATE INDEX idx_lg4jthreadtag_thread_id ON LG4JThreadTag(thread_id);
 
 CREATE UNIQUE INDEX idx_unique_lg4jthreadtag_slug ON LG4JThreadTag(thread_id, name);
+
+-- touch
