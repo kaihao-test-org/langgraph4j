@@ -154,3 +154,5 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
 ## Storage notes
 
 Checkpoint rows are written per thread.
+
+More detail on storage.
