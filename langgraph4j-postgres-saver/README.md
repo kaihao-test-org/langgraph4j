@@ -150,3 +150,7 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+## Checkpoint backends
+
+See the module javadoc for the list of supported checkpoint backends.
