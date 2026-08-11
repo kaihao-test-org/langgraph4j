@@ -17,7 +17,6 @@ CREATE TABLE LG4JCheckpoint (
     node_id VARCHAR(255),
     next_node_id VARCHAR(255),
     state_data JSONB NOT NULL,
-    state_content_type VARCHAR(100) NOT NULL, -- New field for content type
     saved_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_thread
