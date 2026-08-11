@@ -4,8 +4,7 @@ DROP TABLE IF EXISTS LG4JThread CASCADE;
 
 CREATE TABLE LG4JThread (
     thread_id UUID PRIMARY KEY,
-    thread_name VARCHAR(255),
-    is_released BOOLEAN DEFAULT FALSE NOT NULL
+    thread_name VARCHAR(255)
 --    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 --    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -35,7 +34,7 @@ CREATE INDEX idx_lg4jcheckpoint_thread_id_saved_at_desc ON LG4JCheckpoint(thread
 -- Index to optimize search for thread_name where is_released is FALSE
 -- CREATE INDEX idx_lg4jthread_thread_name_unreleased ON LG4JThread (thread_name) WHERE is_released = FALSE;
 
-CREATE UNIQUE INDEX idx_unique_lg4jthread_thread_name_unreleased  ON LG4JThread(thread_name) WHERE is_released = FALSE;
+CREATE UNIQUE INDEX idx_unique_lg4jthread_thread_name ON LG4JThread(thread_name);
 
 -- Optional: Index on is_released if you frequently query for open/released threads
 --CREATE INDEX idx_threads_is_released ON threads(is_released);
