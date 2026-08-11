@@ -4,7 +4,6 @@ CREATE TABLE LG4JThreadPhase (
     phase_id UUID PRIMARY KEY,
     thread_id UUID NOT NULL,
     name VARCHAR(255) NOT NULL,
-    slug VARCHAR(255) NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_phase_thread
@@ -15,4 +14,4 @@ CREATE TABLE LG4JThreadPhase (
 
 CREATE INDEX idx_lg4jthreadphase_thread_id ON LG4JThreadPhase(thread_id);
 
-CREATE UNIQUE INDEX idx_unique_lg4jthreadphase_slug ON LG4JThreadPhase(thread_id, slug);
+CREATE UNIQUE INDEX idx_unique_lg4jthreadphase_slug ON LG4JThreadPhase(thread_id, name);
