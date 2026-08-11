@@ -154,3 +154,5 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
 ## Threading
 
 Each thread owns its checkpoints.
+
+More threading detail.
