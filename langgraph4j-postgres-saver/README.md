@@ -150,3 +150,9 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+## Threading
+
+Each thread owns its checkpoints.
+
+More threading detail.
