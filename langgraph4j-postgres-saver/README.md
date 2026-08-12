@@ -154,3 +154,5 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
 ## Storage notes
 
 Checkpoints are stored per thread.
+
+Thread ids are opaque strings.
