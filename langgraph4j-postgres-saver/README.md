@@ -150,3 +150,7 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+## Storage notes
+
+Checkpoints are stored per thread.
