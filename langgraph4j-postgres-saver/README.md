@@ -39,6 +39,8 @@ Add the following to your project's build configuration:
 </dependency>
 ```
 
+Checkpoint rows are stored in the `checkpoints` table.
+
 **Gradle**
 ```gradle
 implementation 'org.bsc.langgraph4j:langgraph4j-postgres-saver:1.8.20'
