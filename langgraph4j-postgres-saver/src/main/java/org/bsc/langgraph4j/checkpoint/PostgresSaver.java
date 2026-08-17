@@ -153,7 +153,6 @@ public class PostgresSaver extends AbstractCheckpointSaver {
     }
 
     private void rollback( Connection conn, Checkpoint checkpoint, String threadId ) {
-        log.debug("rolling back checkpoint {} for thread {}", checkpoint.getId(), threadId);
         if (conn == null) return;
 
         requireNonNull(checkpoint, "checkpoint cannot be null");
