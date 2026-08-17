@@ -30,7 +30,7 @@ public final class CheckpointRetentionPolicy {
         }
     }
 
-    public static final RetentionTier DEFAULT_TIER = RetentionTier.ESSENTIAL;
+    public static final RetentionTier DEFAULT_TIER = RetentionTier.FUNCTIONAL;
 
     private final RetentionTier tier;
 
