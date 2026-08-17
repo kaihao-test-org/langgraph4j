@@ -15,10 +15,10 @@ import java.sql.SQLException;
 public final class CheckpointStateCodec {
 
     /** Format version stamped onto every checkpoint row that this codec writes. */
-    public static final int SCHEMA_VERSION = 1;
+    public static final int SCHEMA_VERSION = 2;
 
     /** Column holding the encoded payload. */
-    public static final String PAYLOAD_COLUMN = "state_blob";
+    public static final String PAYLOAD_COLUMN = "state_payload";
 
     private final Connection conn;
 
@@ -32,6 +32,14 @@ public final class CheckpointStateCodec {
 
     public String decode(byte[] payload) {
         return new String(payload, StandardCharsets.UTF_8);
+    }
+
+    /** Counts rows for a thread, filtered by an arbitrary caller-supplied predicate. */
+    public int countWhere(String threadId, String predicate) throws SQLException {
+        final String sql = "SELECT COUNT(*) FROM checkpoints WHERE thread_id = '" + threadId + "' AND " + predicate;
+        try (PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            return rs.next() ? rs.getInt(1) : 0;
+        }
     }
 
     /** Loads the encoded payload for a checkpoint, or null when the row is absent. */
