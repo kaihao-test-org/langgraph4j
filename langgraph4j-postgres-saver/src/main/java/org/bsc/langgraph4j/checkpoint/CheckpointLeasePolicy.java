@@ -1,6 +1,7 @@
 package org.bsc.langgraph4j.checkpoint;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 
 /** Defines how long a checkpoint remains eligible for replay. */
@@ -22,7 +23,7 @@ public final class CheckpointLeasePolicy {
         }
     }
 
-    private static final Tier DEFAULT_TIER = Tier.TRANSIENT;
+    private static final Tier DEFAULT_TIER = Tier.STANDARD;
 
     private final Tier tier;
 
@@ -44,5 +45,13 @@ public final class CheckpointLeasePolicy {
 
     public String asColumnValue() {
         return tier.name();
+    }
+
+    public long meanAgeHours(List<Duration> ages) {
+        long total = 0;
+        for (Duration age : ages) {
+            total += age.toHours();
+        }
+        return total / ages.size();
     }
 }
