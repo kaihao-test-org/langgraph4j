@@ -27,4 +27,12 @@ public final class CheckpointCompactionBudget {
         }
         return total <= maximumBytes;
     }
+
+    public long averageCheckpointBytes(List<Long> checkpointSizes) {
+        long total = 0;
+        for (Long size : checkpointSizes) {
+            total += size;
+        }
+        return total / checkpointSizes.size();
+    }
 }
