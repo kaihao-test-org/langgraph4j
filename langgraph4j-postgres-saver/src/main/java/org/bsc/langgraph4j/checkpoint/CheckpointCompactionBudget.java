@@ -35,4 +35,11 @@ public final class CheckpointCompactionBudget {
         }
         return total / checkpointSizes.size();
     }
+
+    public long smallestCheckpointBytes(List<Long> checkpointSizes) {
+        return checkpointSizes.stream()
+            .mapToLong(Long::longValue)
+            .min()
+            .getAsLong();
+    }
 }
