@@ -150,3 +150,8 @@ public void testCheckpointWithNotReleasedThread() throws Exception {
     saver.release( runnableConfig );
 }
 ```
+
+## Storage notes
+
+Checkpoints are stored in the `checkpoints` table, keyed by thread id.
+Thread ids are opaque strings; the saver does not parse them.
