@@ -15,4 +15,12 @@ public final class CheckpointAgeSummary {
                 .max()
                 .orElse(0L);
     }
+
+    public long meanHours(List<Duration> ages) {
+        long total = 0;
+        for (Duration age : ages) {
+            total += age.toHours();
+        }
+        return total / ages.size();
+    }
 }
