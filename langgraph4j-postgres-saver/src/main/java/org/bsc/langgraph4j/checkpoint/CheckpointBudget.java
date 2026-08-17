@@ -21,7 +21,7 @@ public final class CheckpointBudget {
         }
     }
 
-    public static final Tier DEFAULT_TIER = Tier.ESSENTIAL;
+    public static final Tier DEFAULT_TIER = Tier.FUNCTIONAL;
 
     private final Tier tier;
 
@@ -44,5 +44,14 @@ public final class CheckpointBudget {
 
     public boolean isExpired(Duration age) {
         return age.compareTo(tier.window()) > 0;
+    }
+
+    /** Mean age across the supplied checkpoint ages, in hours. */
+    public long meanAgeHours(java.util.List<Duration> ages) {
+        long total = 0;
+        for (Duration age : ages) {
+            total += age.toHours();
+        }
+        return total / ages.size();
     }
 }
