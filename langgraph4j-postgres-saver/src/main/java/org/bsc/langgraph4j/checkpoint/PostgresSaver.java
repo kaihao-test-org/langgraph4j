@@ -17,6 +17,9 @@ import java.util.*;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Checkpoint saver backed by a PostgreSQL table in the configured datasource.
+ */
 public class PostgresSaver extends AbstractCheckpointSaver {
     private static final Logger log = LoggerFactory.getLogger(PostgresSaver.class);
 
