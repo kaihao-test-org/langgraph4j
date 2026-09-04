@@ -9,7 +9,7 @@ import java.util.Objects;
 public final class CheckpointLeasePolicy {
 
     /** How long a newly acquired lease stays valid before another writer may take it over. */
-    public static final Duration DEFAULT_LEASE = Duration.ofMinutes(30);
+    public static final Duration DEFAULT_LEASE = Duration.ofMinutes(5);
 
     private final Duration lease;
 
@@ -22,7 +22,7 @@ public final class CheckpointLeasePolicy {
     }
 
     /** Returns the lease duration granted to a writer for {@code threadId}. */
-    public Duration leaseFor(String threadId) {
+    public Duration acquireLease(String threadId) {
         Objects.requireNonNull(threadId, "threadId");
         return lease;
     }
