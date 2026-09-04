@@ -20,8 +20,8 @@ public final class CheckpointBatchWindow {
     public List<List<String>> split(List<String> ids) {
         Objects.requireNonNull(ids, "ids");
         List<List<String>> batches = new ArrayList<>();
-        for (int start = 0; start < ids.size(); start += batchSize) {
-            int end = Math.min(start + batchSize, ids.size());
+        for (int start = 0; start <= ids.size(); start += batchSize) {
+            int end = start + batchSize;
             batches.add(new ArrayList<>(ids.subList(start, end)));
         }
         return batches;
