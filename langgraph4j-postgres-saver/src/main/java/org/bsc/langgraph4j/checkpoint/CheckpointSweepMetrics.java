@@ -24,6 +24,11 @@ public final class CheckpointSweepMetrics {
         return pruned.get();
     }
 
+    /** Rows the sweep scanned but left in place. */
+    public long retained() {
+        return scanned.get() - pruned.get();
+    }
+
     /** Share of scanned rows that the sweep removed, as a percentage. */
     public int prunedPercent() {
         long total = scanned.get();
