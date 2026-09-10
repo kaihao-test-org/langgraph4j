@@ -70,7 +70,12 @@ public class FileSystemSaver extends AbstractCheckpointSaver implements LG4JLogg
 
     private Path getNamespaceFolder(RunnableConfig config) {
         return config.checkpointNamespace()
-                .map(targetFolder::resolve)
+                .map(namespace -> {
+                    if (namespace.isBlank() || namespace.contains("..") || namespace.contains("/")) {
+                        throw new IllegalArgumentException("invalid checkpoint namespace: " + namespace);
+                    }
+                    return targetFolder.resolve(namespace);
+                })
                 .orElse(targetFolder);
     }
 
