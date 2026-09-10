@@ -144,7 +144,7 @@ public class FileSystemSaver extends AbstractCheckpointSaver implements LG4JLogg
     @Override
     protected Tag releaseCheckpoints(RunnableConfig config, LinkedList<Checkpoint> checkpoints) throws Exception {
         final var currentPath = getPath(config);
-        final var namesapceFolder = getNamespaceFolder(config);
+        final var namespaceFolder = getNamespaceFolder(config);
 
         if (!Files.exists(currentPath)) {
             log.warn("file {} doesn't exist. Skipping file operations.", currentPath);
@@ -154,7 +154,7 @@ public class FileSystemSaver extends AbstractCheckpointSaver implements LG4JLogg
         final var versionPattern = Pattern.compile(format("%s-v(\\d+)\\%s$", getBaseName(config), extension));
 
         int maxVersion = 0;
-        try (var stream = Files.list(namesapceFolder)) {
+        try (var stream = Files.list(namespaceFolder)) {
             maxVersion = stream
                     .map(path -> path.getFileName().toString())
                     .map(versionPattern::matcher)
@@ -163,13 +163,13 @@ public class FileSystemSaver extends AbstractCheckpointSaver implements LG4JLogg
                     .max()
                     .orElse(0); // Default to 0 if no versioned files found
         } catch (IOException e) {
-            log.error("Failed to list directory {} to determine next version number for backup. Skipping file operations.", namesapceFolder, e);
+            log.error("Failed to list directory {} to determine next version number for backup. Skipping file operations.", namespaceFolder, e);
             return new Tag( threadId(config), List.of());
         }
 
         int nextVersion = maxVersion + 1;
         var backupFilename = format("%s-v%d%s", getBaseName(config), nextVersion, extension);
-        Path backupPath = namesapceFolder.resolve(backupFilename);
+        Path backupPath = namespaceFolder.resolve(backupFilename);
 
         Files.copy(currentPath, backupPath, StandardCopyOption.REPLACE_EXISTING);
 
