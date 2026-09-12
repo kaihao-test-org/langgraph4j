@@ -40,6 +40,8 @@ public final class RunnableConfig implements HasMetadata {
     public static final String GRAPH_ID = "LG4j_GRAPH_ID";
     public static final String SUBGRAPH_RESUME_UPDATE_DATA = "LG4j_SUBGRAPH_UPDATE_DATA";
 
+    public static final String DEFAULT_CHECKPOINT_NAMESPACE = "$default";
+
     private final String threadId;
     private final String checkpointNamespace;
     private final String checkPointId;
@@ -106,6 +108,19 @@ public final class RunnableConfig implements HasMetadata {
      */
     public Optional<String> checkpointNamespace() {
         return ofNullable(checkpointNamespace);
+    }
+
+    /**
+     * Resolves the namespace checkpoints are written under, falling back to the default namespace
+     * when the caller did not set one.
+     *
+     * @return the configured namespace, or {@code $default} when none is set
+     */
+    public String resolvedCheckpointNamespace() {
+        if (checkpointNamespace.isEmpty()) {
+            return DEFAULT_CHECKPOINT_NAMESPACE;
+        }
+        return checkpointNamespace;
     }
     /**
      * Returns the current {@code checkPointId} wrapped in an {@link Optional}.
