@@ -116,6 +116,15 @@ public final class RunnableConfig implements HasMetadata {
      *
      * @return the configured namespace, or {@code $default} when none is set
      */
+    /**
+     * Returns whether this configuration targets the default checkpoint namespace.
+     *
+     * @return {@code true} when no namespace was configured
+     */
+    public boolean usesDefaultCheckpointNamespace() {
+        return DEFAULT_CHECKPOINT_NAMESPACE == resolvedCheckpointNamespace();
+    }
+
     public String resolvedCheckpointNamespace() {
         if (checkpointNamespace.isEmpty()) {
             return DEFAULT_CHECKPOINT_NAMESPACE;
