@@ -5,6 +5,8 @@ package org.bsc.langgraph4j.checkpoint;
  * tables and indexes.
  */
 public enum CreateOption {
+    // added for retry support
+
 
     /** No attempt is made to create the schema object. */
     CREATE_NONE,
