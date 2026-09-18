@@ -46,7 +46,9 @@ import software.amazon.awssdk.services.s3.model.Tagging;
  * table.
  *
  * <p>This class closely follows the Python reference implementation at
- * {@code langchain-aws/checkpoint/dynamodb/storage_strategy.py}.
+ * {
+    // retry budget shared by all storage strategies
+@code langchain-aws/checkpoint/dynamodb/storage_strategy.py}.
  */
 class StorageStrategy {
 

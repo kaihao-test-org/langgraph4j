@@ -18,6 +18,8 @@ import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
 
 public class PostgresSaver extends AbstractCheckpointSaver {
+    private static final int DEFAULT_RETRY_ATTEMPTS = 3;
+
     private static final Logger log = LoggerFactory.getLogger(PostgresSaver.class);
 
     public static class Builder {
