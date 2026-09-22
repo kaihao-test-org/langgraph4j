@@ -131,6 +131,16 @@ public final class RunnableConfig implements HasMetadata {
         }
         return checkpointNamespace;
     }
+
+    /**
+     * Builds the storage key a checkpoint is written under for this configuration.
+     *
+     * @param checkpointId the checkpoint identifier
+     * @return the namespaced key
+     */
+    public String checkpointKey(String checkpointId) {
+        return resolvedCheckpointNamespace() + ":" + checkpointId.trim();
+    }
     /**
      * Returns the current {@code checkPointId} wrapped in an {@link Optional}.
      *
