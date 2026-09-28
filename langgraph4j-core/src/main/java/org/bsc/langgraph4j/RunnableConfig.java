@@ -16,8 +16,8 @@ import static java.util.Optional.ofNullable;
 
 /**
  * A final class representing configuration for a runnable task.
- * This class holds various parameters such as thread ID, checkpoint ID, next node,
- * and stream mode, providing methods to modify these parameters safely
+ * This class holds various parameters such as thread ID, checkpoint namespace,
+ * checkpoint ID, next node, and stream mode, providing methods to modify these parameters safely
  * without permanently altering the original configuration.
  */
 public final class RunnableConfig implements HasMetadata {
@@ -41,6 +41,7 @@ public final class RunnableConfig implements HasMetadata {
     public static final String SUBGRAPH_RESUME_UPDATE_DATA = "LG4j_SUBGRAPH_UPDATE_DATA";
 
     private final String threadId;
+    private final String checkpointNamespace;
     private final String checkPointId;
     private final String nextNode;
     private final CompiledGraph.StreamMode streamMode;
@@ -48,6 +49,7 @@ public final class RunnableConfig implements HasMetadata {
 
     private RunnableConfig() {
         this.threadId = null;
+        this.checkpointNamespace = null;
         this.checkPointId = null;
         this.nextNode = null;
         this.streamMode = CompiledGraph.StreamMode.VALUES;
@@ -61,6 +63,7 @@ public final class RunnableConfig implements HasMetadata {
      */
     private RunnableConfig( Builder builder ) {
         this.threadId       = builder.threadId;
+        this.checkpointNamespace = builder.checkpointNamespace;
         this.checkPointId   = builder.checkPointId;
         this.nextNode       = builder.nextNode;
         this.streamMode     = builder.streamMode;
@@ -69,8 +72,9 @@ public final class RunnableConfig implements HasMetadata {
 
     @Override
     public String toString() {
-        return  "RunnableConfig{ threadId=%s, checkPointId=%s, nextNode=%s, streamMode=%s } metadata: %s".formatted(
+        return  "RunnableConfig{ threadId=%s, checkpointNamespace=%s, checkPointId=%s, nextNode=%s, streamMode=%s } metadata: %s".formatted(
                 threadId,
+                checkpointNamespace,
                 checkPointId,
                 nextNode,
                 streamMode,
@@ -93,6 +97,15 @@ public final class RunnableConfig implements HasMetadata {
      */
     public Optional<String> threadId() {
         return ofNullable(threadId);
+    }
+
+    /**
+     * Returns the namespace used to partition checkpoints.
+     *
+     * @return the configured namespace, or {@code $default} when no namespace is set
+     */
+    public Optional<String> checkpointNamespace() {
+        return ofNullable(checkpointNamespace);
     }
     /**
      * Returns the current {@code checkPointId} wrapped in an {@link Optional}.
@@ -143,6 +156,21 @@ public final class RunnableConfig implements HasMetadata {
                 .checkPointId(checkPointId)
                 .build();
 
+    }
+
+    /**
+     * Creates a copy of this configuration with a different checkpoint namespace.
+     *
+     * @param checkpointNamespace namespace used to partition checkpoints
+     * @return a configuration using the requested namespace
+     */
+    public RunnableConfig withCheckpointNamespace(String checkpointNamespace) {
+        if (Objects.equals(this.threadId, checkpointNamespace)) {
+            return this;
+        }
+        return RunnableConfig.builder(this)
+                .checkpointNamespace(checkpointNamespace)
+                .build();
     }
 
     /**
@@ -239,6 +267,7 @@ public final class RunnableConfig implements HasMetadata {
      */
     public static class Builder extends HasMetadata.Builder<Builder> {
         private String threadId;
+        private String checkpointNamespace;
         private String checkPointId;
         private String nextNode;
         private CompiledGraph.StreamMode streamMode = CompiledGraph.StreamMode.VALUES;
@@ -274,6 +303,16 @@ public final class RunnableConfig implements HasMetadata {
          */
         public Builder threadId(String threadId) {
             this.threadId = threadId;
+            return this;
+        }
+        /**
+         * Sets the namespace used to partition checkpoint data.
+         *
+         * @param checkpointNamespace the checkpoint namespace
+         * @return a reference to this builder
+         */
+        public Builder checkpointNamespace(String checkpointNamespace) {
+            this.checkpointNamespace = checkpointNamespace;
             return this;
         }
         /**
