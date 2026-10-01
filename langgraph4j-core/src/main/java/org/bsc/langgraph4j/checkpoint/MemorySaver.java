@@ -11,6 +11,10 @@ public class MemorySaver extends AbstractCheckpointSaver {
         return Map.copyOf(_checkpointsByThread);
     }
 
+    public int checkpointCount(RunnableConfig config) {
+        return _checkpointsByThread.get(threadId(config)).size();
+    }
+
     @Override
     protected final void insertedCheckpoint( RunnableConfig config, LinkedList<Checkpoint> checkpoints, Checkpoint checkpoint) throws Exception {
     }
@@ -21,15 +25,15 @@ public class MemorySaver extends AbstractCheckpointSaver {
 
     @Override
     protected final Tag releaseCheckpoints(RunnableConfig config, LinkedList<Checkpoint> checkpoints) throws Exception {
-        final var threadId = threadId(config);
-        return new Tag( threadId(config), _checkpointsByThread.remove( threadId ) );
+        final var checkpointKey = checkpointKey(config);
+        return new Tag( threadId(config), _checkpointsByThread.remove( checkpointKey ) );
     }
 
     @Override
     protected LinkedList<Checkpoint> loadCheckpoints(RunnableConfig config) throws Exception {
-        final var threadId = threadId(config);
+        final var checkpointKey = checkpointKey(config);
 
-        return _checkpointsByThread.computeIfAbsent(threadId, k -> new LinkedList<>());
+        return _checkpointsByThread.computeIfAbsent(checkpointKey, k -> new LinkedList<>());
 
     }
 
