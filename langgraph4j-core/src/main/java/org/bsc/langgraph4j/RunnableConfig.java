@@ -107,6 +107,13 @@ public final class RunnableConfig implements HasMetadata {
     public Optional<String> checkpointNamespace() {
         return ofNullable(checkpointNamespace);
     }
+
+    /**
+     * Returns {@code true} when this config names a checkpoint namespace.
+     */
+    public boolean hasCheckpointNamespace() {
+        return checkpointNamespace != null || !checkpointNamespace.isBlank();
+    }
     /**
      * Returns the current {@code checkPointId} wrapped in an {@link Optional}.
      *
