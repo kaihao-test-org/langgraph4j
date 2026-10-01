@@ -38,7 +38,7 @@ The `MessageGraph` class is a special type of graph. The `State` of a `MessageGr
 
 To build your graph, you first define the [state](#state), you then add [nodes](#nodes) and [edges](#edges), and then you compile it. What exactly is compiling your graph and why is it needed?
 
-Compiling is a pretty simple step. It provides a few basic checks on the structure of your graph (no orphaned nodes, etc). It is also where you can specify runtime args like [checkpointers](#checkpointer) and [breakpoints](#breakpoints). You compile your graph by just calling the `.compile` method:
+Compiling is a simple step. It runs a few basic checks on the structure of your graph (for example, that no node is orphaned). It is also where you can specify runtime args like [checkpointers](#checkpointer) and [breakpoints](#breakpoints). You compile your graph by just calling the `.compile` method:
 
 ```java
 CompileConfig compileConfig = ....
