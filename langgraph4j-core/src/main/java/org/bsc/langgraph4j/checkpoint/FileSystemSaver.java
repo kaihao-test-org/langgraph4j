@@ -78,6 +78,10 @@ public class FileSystemSaver extends AbstractCheckpointSaver implements LG4JLogg
         return Paths.get(getNamespaceFolder(config).toString(), getBaseName(config).concat(extension));
     }
 
+    public boolean hasCheckpoints(RunnableConfig config) {
+        return getFile(config).length() > 0;
+    }
+
     private File getFile(RunnableConfig config) {
         return getPath(config).toFile();
     }
