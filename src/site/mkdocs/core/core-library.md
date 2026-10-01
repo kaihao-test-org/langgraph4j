@@ -128,6 +128,7 @@ You provide a `RunnableConfig` when invoking the graph:
 ```java
 var config = RunnableConfig.builder()
                           .threadId("user-123")
+                          .checkpointNamespace("tenant-acme")
                           .streamMode(CompiledGraph.StreamMode.UPDATES)
                           .putMetadata("userId", "user-123")
                           .putMetadata("model", "gpt-4")
@@ -141,6 +142,7 @@ graph.stream(inputs, config);
 | Attribute | Type | Description |
 | --------- | ---- | ----------- |
 | **threadId** | `String` | A unique identifier for the execution thread/session. Essential for checkpoint-based persistence, as it groups related executions together. Allows resuming interrupted graphs or maintaining conversation history. |
+| **checkpointNamespace** | `String` | Optional partition for checkpoint data. Namespace values are trimmed and must contain only letters, digits, hyphens, or underscores. |
 | **checkPointId** | `String` | Specific checkpoint identifier within a thread. Useful for resuming execution from a specific point rather than from the beginning. |
 | **nextNode** | `String` | Specifies which node should execute next. Primarily used internally by the graph engine when resuming interrupted executions. |
 | **streamMode** | `CompiledGraph.StreamMode` | Controls how results are streamed during execution. Options are `VALUES` (full state after each step) or `UPDATES` (only state changes). Defaults to `VALUES`. |
@@ -565,9 +567,12 @@ You must pass these when invoking the graph as part of the configurable part of 
 
 var config = RunnableConfig.builder()
                                   .threadId("a")
+                                  .checkpointNamespace("tenant-acme")
                                   .build();
 graph.invoke(inputs, config);
 ```
+
+Checkpoint namespaces allow separate applications or tenants to reuse the same thread ID without sharing state. When omitted, checkpoints continue to use the default namespace for backward compatibility. `MemorySaver` and `FileSystemSaver` both apply the namespace to list, get, put, release, and delete operations.
 
 See [this guide](../how-tos/persistence.ipynb) for how to use threads.
 
