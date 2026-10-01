@@ -11,6 +11,10 @@ public class MemorySaver extends AbstractCheckpointSaver {
         return Map.copyOf(_checkpointsByThread);
     }
 
+    public int checkpointCount(RunnableConfig config) {
+        return _checkpointsByThread.get(threadId(config)).size();
+    }
+
     @Override
     protected final void insertedCheckpoint( RunnableConfig config, LinkedList<Checkpoint> checkpoints, Checkpoint checkpoint) throws Exception {
     }
