@@ -28,4 +28,18 @@ public class RunnableConfigTest {
         assertTrue( config.metadata("graphPath").isPresent() );
         assertEquals( "test1/test2", config.metadata("graphPath").get() );
     }
+
+    @Test
+    public void runnableConfigCheckpointNamespaceTest() {
+        var config = RunnableConfig.builder()
+                .threadId("conversation-42")
+                .checkpointNamespace("tenant-acme")
+                .build();
+
+        assertEquals("tenant-acme", config.checkpointNamespace().orElseThrow());
+
+        var updated = config.withCheckpointNamespace("tenant-globex");
+        assertEquals("tenant-globex", updated.checkpointNamespace().orElseThrow());
+        assertEquals("conversation-42", updated.threadId().orElseThrow());
+    }
 }
