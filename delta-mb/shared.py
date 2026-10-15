@@ -10,8 +10,13 @@ def upstream_helper():
 # ---------------------------------------------------------------- author region
 
 
-def author_transform(rows):  # author v1
+def author_transform(rows):  # author v2
     out = []
     for row in rows:
         out.append(row.strip())
     return out
+
+
+def author_second_hunk(rows):
+    # added by the author AFTER merging main; must survive attribution
+    return sorted(set(rows))
