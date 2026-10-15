@@ -8,6 +8,7 @@ import static java.util.Optional.ofNullable;
 
 public interface BaseCheckpointSaver {
     String THREAD_ID_DEFAULT = "$default";
+    String CHECKPOINT_NAMESPACE_DEFAULT = "$default";
 
     record Tag(String threadId, Collection<Checkpoint> checkpoints) {
         public Tag(String threadId, Collection<Checkpoint> checkpoints) {
@@ -26,5 +27,25 @@ public interface BaseCheckpointSaver {
 
     default String threadId( RunnableConfig config ) {
         return config.threadId().orElse(THREAD_ID_DEFAULT);
+    }
+
+    /**
+     * Returns the logical namespace for checkpoint storage.
+     *
+     * @param config runtime configuration
+     * @return the configured namespace or the default namespace
+     */
+    default String checkpointNamespace(RunnableConfig config) {
+        return config.checkpointNamespace().orElse(CHECKPOINT_NAMESPACE_DEFAULT);
+    }
+
+    /**
+     * Builds a stable storage key for checkpoint savers that use a flat key space.
+     *
+     * @param config runtime configuration
+     * @return namespace-qualified thread key
+     */
+    default String checkpointKey(RunnableConfig config) {
+        return "%s:%s".formatted(checkpointNamespace(config), threadId(config));
     }
 }
